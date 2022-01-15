@@ -5,7 +5,7 @@ import './courses';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import courses from './courses';
 import useStyles from './style';
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const cards = [1, 2, 3]
 
 
 function App() {
@@ -33,35 +33,34 @@ function App() {
         </Toolbar>
     </AppBar>
 
-    {!listingTextbook ? (<main>
-      <Typography variant = "h4" align = "center">Sell Textbooks</Typography>
+    <h1 style = {{textAlign: "center", marginTop: "20px"}}>Sell Textbooks</h1>
       <div className = {classes.container}>
         <Container maxWidth = "sm">
-          <div className = {classes.searchBar}>
           <Autocomplete
-        style={{ width: 500 }}
-        freeSolo
-        filterOptions={filterOptions}
-        options={courses}
-        renderInput={(params) => (
-          <TextField {...params}
-            variant="outlined"
-            label="Course Code"
+            style={{ width: 500 }}
+            freeSolo
+            filterOptions={filterOptions}
+            options={courses}
+            renderInput={(params) => (
+              <div className = {classes.searchBar}>
+              <TextField {...params}
+                variant="outlined"
+                label="Course Code"
+              />
+              </div>
+            )}
           />
-        )}
-      />
-            </div>
             <div className = {classes.buttons}>
             <Grid container spacing = {2} justify = "center">
               <Grid item>
-                <Button variant = "contained" color = "primary" onClick = {handleClick}>
-                  Post
-                </Button>
+              <Button variant = "contained" className = {classes.button} onClick = {handleClick}>Search</Button>
               </Grid>
             </Grid>
             </div>
         </Container>
       </div>
+
+    {!listingTextbook ? (<main>
 
       <Container className = {classes.cardGrid} maxWidth = "md">
 
@@ -75,9 +74,6 @@ function App() {
                     title = "Image title"
                 />
                 <CardContent className = {classes.cardContent}>
-                  <Typography gutterBottom variant = "h5">
-                    Heading
-                  </Typography>
                   <Typography>
                     This is a posting with some content
                   </Typography>

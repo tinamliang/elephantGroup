@@ -24,8 +24,14 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   searchBar: {
-    justifyContent: "center"
-  }
+    textAlign: 'center'
+  },
+
+  button: {
+    backgroundColor: '#C51E3A',
+    color: '#FFFFFF'
+  },
+
 }));
 
 export default useStyles;
