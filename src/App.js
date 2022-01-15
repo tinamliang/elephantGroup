@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
-import { Typography, TextField, AppBar, Toolbar, CssBaseline, CardActions, Container, Grid, Button, Card, CardMedia, CardContent } from '@material-ui/core';
+import { CardHeader, CircularProgress, Typography, TextField, AppBar, Toolbar, CssBaseline, CardActions, Container, Grid, Button, Card, CardMedia, CardContent } from '@mui/material';
 import './courses';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import {Autocomplete, createFilterOptions } from '@mui/material';
 import courses from './courses';
-import useStyles from './style';
-const cards = [1, 2, 3]
+const cards = []
 
 
 function App() {
-  const classes = useStyles()
-
+ 
   const [listingTextbook, setlistingTextbook] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const filterOptions = createFilterOptions({
     matchFrom: 'start',
     stringify: option => option,
   });
 
-  let handleClick = () => {
+  let handleSell = () => {
+    setlistingTextbook(false);
+  }
+
+  let handleBuy = () => {
     setlistingTextbook(true);
   }
 
@@ -27,68 +30,119 @@ function App() {
     <CssBaseline />
     <AppBar style = {{ background: "#C51E3A"}} position = "relative">
       <Toolbar>
-        <Typography variant = "h4">
+        <Typography variant = "h4" >
           McGill 
         </Typography>
-        </Toolbar>
+        <Button variant='h4' onClick = {handleSell}>
+          Buy
+        </Button>
+        <Button variant='h4' onClick = {handleBuy}>
+          Sell
+        </Button>
+      </Toolbar>
     </AppBar>
 
-    <h1 style = {{textAlign: "center", marginTop: "20px"}}>Sell Textbooks</h1>
-      <div className = {classes.container}>
-        <Container maxWidth = "sm">
-          <Autocomplete
-            style={{ width: 500 }}
-            freeSolo
-            filterOptions={filterOptions}
-            options={courses}
-            renderInput={(params) => (
-              <div className = {classes.searchBar}>
-              <TextField {...params}
-                variant="outlined"
-                label="Course Code"
-              />
-              </div>
-            )}
-          />
-            <div className = {classes.buttons}>
-            <Grid container spacing = {2} justify = "center">
-              <Grid item>
-              <Button variant = "contained" className = {classes.button} onClick = {handleClick}>Search</Button>
-              </Grid>
-            </Grid>
-            </div>
-        </Container>
-      </div>
-
-    {!listingTextbook ? (<main>
-
-      <Container className = {classes.cardGrid} maxWidth = "md">
-
-        <Grid container spacing = {4}>
-          {cards.map(() => (
-            <Grid item>
-              <Card className = {classes.card}>
-                <CardMedia 
-                    className = {classes.cardMedia}
-                    image = "https://source.unsplash.com/random"
-                    title = "Image title"
+    {!listingTextbook ? (
+      <main>
+        <Typography variant = "h4" align = "center" sx={{mt: 2, mb: 1}}>Buy a Textbook</Typography>
+          <div className ="container">
+            <Container maxWidth = "sm">
+              <div className = {"searchBar"}>
+                <Autocomplete
+                  style={{ maxWidth: 500 }}
+                  freeSolo
+                  filterOptions={filterOptions}
+                  options={courses}
+                  renderInput={(params) => (
+                <TextField {...params}
+                  
+                  variant="outlined"
+                  label="Course Code"
+                />)}
                 />
-                <CardContent className = {classes.cardContent}>
-                  <Typography>
-                    This is a posting with some content
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size = "small" color = "primary">Review</Button>
-                  <Button size = "small" color = "primary">Edit</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-            ))}
-        </Grid>
+              </div>
+              <div className = "buttons" style={{alignItems: 'center'}}>
+                <Grid container justifyContent={'center'} sx={{mt: 2}}>
+                  <Grid item>
+                    <Button variant = "contained" color = "primary">
+                      Search
+                    </Button>
+                  </Grid>
+                </Grid>
+              </div>
+            </Container>
+          </div>
 
-      </Container>
-    </main>) : (<h1>No!</h1>)}
+            {loading ? (
+         
+              <Grid container justifyContent={'center'} sx={{mt: 5}}>
+                <Grid item>
+                  <CircularProgress/>
+                </Grid>
+              </Grid>
+     
+            ): 
+              <Fragment>
+                {cards.length > 0 ? (
+
+                              
+                <Container sx={{alignItems: 'center', mt: 4, mb: 7}}>
+                <Grid container spacing = {4}>
+                {cards.map((card, i) => (
+                  <Grid item xs={12} md={6} lg={4} key={i}>
+                    <Card >
+                      <CardHeader
+                        title="Shrimp and Chorizo Paella"
+                        titleTypographyProps={{fontSize: 18}}
+                        subheader="John Doe"
+                        subheaderTypographyProps={{fontSize: 15}}
+                      />
+                      <CardMedia 
+                        component='img'
+                        height='194'
+                        image = "https://apod.nasa.gov/apod/image/2201/PIA19048europa1024.jpg"
+                        title = "Image title"
+                      />
+                      <CardContent >
+                        <Typography fontSize={16}>
+                            <b>Price: </b>  
+                        </Typography>
+                        <hr/>
+                        <Typography  fontSize={15}>
+                          <i>Contact: </i>
+                        </Typography>
+
+                      </CardContent>
+                      <CardActions>
+                        <Button size = "small" color = "primary">Sold</Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                  ))}
+
+                </Grid>
+
+                </Container>
+                ): (
+                <div className = "buttons" style={{alignItems: 'center'}} sx={{mb: 20, mt: 5}}>
+                    <Grid container justifyContent={'center'} sx={{mt: 2}}>
+                      <Grid item>
+                        <Card style={{maxWidth: 400}}>
+                            <CardHeader
+                              title="No Textbooks Found for this Course"
+                              titleTypographyProps={{fontSize: 18}}
+                            />
+                        </Card>
+                      </Grid>
+                    </Grid>
+                </div>
+                )}
+              </Fragment>
+            
+
+      }</main>
+    
+    ) : (<h1>No!</h1>)}
     
     </>
   );
