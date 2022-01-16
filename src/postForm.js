@@ -6,9 +6,34 @@ function Post() {
 
     const [submitForm, setSubmitForm] = useState(false)
 
+    const[title, setTitle] = useState(null);
+    const[author, setAuthor] = useState(null);
+    const[price, setPrice] = useState(null);
+    const[contact, setContact] = useState(null);
+
     let submitted = () => {
         setSubmitForm(true);
+        setTitle("");
+        setAuthor("");
+        setPrice("");
+        setContact("");
     }
+
+    let handleChange = event => {
+      setTitle(event.target.value);
+    };
+
+    let handleChangeAuthor = event => {
+      setAuthor(event.target.value);
+    };
+
+    let handleChangePrice = event => {
+      setPrice(event.target.value);
+    };
+
+    let handleChangeContact = event => {
+      setContact(event.target.value);
+    };
 
     return (
       
@@ -16,14 +41,13 @@ function Post() {
 
             <Typography variant = "h4" align = "center" sx = {{mt: 6, mb: -5}}>Post your own textbook using this form! </Typography>
 
-            <TextField required sx={{mt: 8, mb: 1, ml: 80}} id = "title" label = "Title" type = "text"></TextField>
+            <TextField required onChange = {handleChange} sx={{mt: 8, mb: 1, ml: 80}} value = {title} id = "title" label = "Title" type = "text"></TextField>
             
-
-            <TextField required sx={{mt: 18, ml: -28}} id = "author" label = "Author" type = "text"></TextField>
+            <TextField required onChange = {handleChangeAuthor} sx={{mt: 18, ml: -28}} value = {author} id = "author" label = "Author" type = "text"></TextField>
  
-            <TextField required sx={{mt: 28, ml: -28}} id = "price" label = "Price" type = "number"></TextField>
+            <TextField required onChange = {handleChangePrice} sx={{mt: 28, ml: -28}} value = {price} id = "price" label = "Price" type = "number"></TextField>
 
-            <TextField required sx={{mt: 38, ml: -28}} id = "contact" label = "Contact" type = "text"></TextField>
+            <TextField required onChange = {handleChangeContact} sx={{mt: 38, ml: -28}} value = {contact} id = "contact" label = "Contact" type = "text"></TextField>
 
             <FormControl sx={{ m: 1, minWidth: 120 }}>
 
