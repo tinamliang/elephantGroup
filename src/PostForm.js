@@ -10,13 +10,14 @@ function Post() {
 
     const [submitForm, setSubmitForm] = useState(false)
     const [error, setError] = useState(false)
-    const[title, setTitle] = useState(null);
-    const[author, setAuthor] = useState(null);
-    const[price, setPrice] = useState(null);
-    const[contact, setContact] = useState(null);
-    const[imageUrl, setImageUrl] = useState(null);
-    const[course, setCourse] = useState(null);
-    const [loading, setLoading] = useState(false)
+    const[title, setTitle] = useState('');
+    const[author, setAuthor] = useState('');
+    const[price, setPrice] = useState('');
+    const[contact, setContact] = useState('');
+    const[imageUrl, setImageUrl] = useState('');
+    const[course, setCourse] = useState('');
+    const[loading, setLoading] = useState(false)
+    const [imageOption, setImageOption] = useState(true)
 
     const filterOptions = createFilterOptions({
         matchFrom: 'start',
@@ -28,15 +29,13 @@ function Post() {
         setError(false)
         setSubmitForm(false)
 
-        console.log(title, author, price, contact, imageUrl)
 
         if (title !== null && title !== '' && author !== null && author !== '' && price !== null && price !== ''
             && contact !== null && contact !== '' && imageUrl !== null && imageUrl !== '' && course !== null && course !== ''
         ) {
 
             setLoading(true)
-            let today = new Date()
-            today = today.toISOString()
+           
             let listing = {
                 image: imageUrl, 
                 author: author,
@@ -44,31 +43,32 @@ function Post() {
                 course: course, 
                 price: price, 
                 title: title,
-                createdAt : today
-
+                image: imageUrl
             }
 
             axios.post('/list', listing)
             .then(res => {
-                console.log(res.data.id)
-                console.log(imageUrl)
-                const config = { headers: { 'content-type': `multipart/form-data; boundary=${imageUrl._boundary}` }};
-                axios.post(`/listTextbook/`, imageUrl, config)
-                .then((res)=> {
+                
+                //const config = { headers: { 'content-type': `multipart/form-data; boundary=${imageUrl._boundary}` }};
+                setTitle('');
+                setAuthor('');
+                setPrice('');
+                setContact('');
+                setImageUrl('');
+                setCourse('')
+                setLoading(false)
+                setSubmitForm(true)
+            
+                // axios.post(`/image`, imageUrl, config)
+                // .then((res)=> {
                    
-                    setTitle(null);
-                    setAuthor(null);
-                    setPrice(null);
-                    setContact(null);
-                    setImageUrl(null);
-                    setLoading(false)
-                    setSubmitForm(true)
-                })
-                .catch(err => {
+                //    
+                // })
+                // .catch(err => {
                   
-                    setLoading(false)
-                    setError(true)
-                })
+                //     setLoading(false)
+                //     setError(true)
+                // })
             })
             .catch(err => {
                
@@ -78,6 +78,10 @@ function Post() {
 
         }
         
+    }
+    
+    let handleChangeImage = (event) => {
+        setImageUrl(event.target.value)
     }
 
     let handleChange = event => {
@@ -100,14 +104,22 @@ function Post() {
         const image = event.target.files[0]
         const formData = new FormData();
         formData.append('image', image, image.name);
-        setImageUrl(formData);
+        //setImageUrl(formData);
+        // axios.defaults.headers = { "Content-Type": "multipart/form-data" }
+        // axios.post(`/image`,formData)
+        // .then((res)=> {
+        //     console.log(res.data)
+        // })
+        // .catch(err => {
+        //     console.log(err)
+        // })
     }
 
     return (
       
         <div>
 
-            <Typography variant = "h4" align = "center" sx = {{mt: 6, mb: -5, mx: 5}}>Post your own textbook using this form! </Typography>
+            <Typography variant = "h4" align = "center" sx = {{mt: 6, mb: -5, mx: 5}}> New Textbook Listing</Typography>
 
             <Grid container align="center">
 
@@ -126,30 +138,42 @@ function Post() {
                 </Grid>
 
                 <Container maxWidth = "sm" sx={{mt: 5}}>
-                    <div className ={"searchBar"} style={{alignItems: 'center'}}>
-                    <Autocomplete
-                        autoHighlight
-                        freeSolo
-                        style={{ minWidth: 200, maxWidth: 470}}
-                        filterOptions={filterOptions}
-                        options={courses}
-                        onChange={(_event, newCourse) => {
-                            setCourse(newCourse)}}
-                        renderInput={(params) => (
-                    <TextField {...params}
-                        variant="outlined"
-                        label="Course Code"
-                    />)}
-                    />
-                    </div>
-                </Container>
-                  
+                            <div className ={"searchBar"} style={{alignItems: 'center'}}>
+                            <Autocomplete
+                                autoHighlight
+                                freeSolo
+                                style={{ minWidth: 200, maxWidth: 470}}
+                                filterOptions={filterOptions}
+                                value={course}
+                                options={courses}
+                                onChange={(_event, newCourse) => {
+                                    setCourse(newCourse)}}
+                                renderInput={(params) => (
+                            <TextField {...params}
+                                variant="outlined"
+                                label="Course Code"
+                            />)}
+                            />
+                            </div>
+                        </Container>
+                {
+                    imageOption ? (
+                        <Grid item xs={12} sx={{mt: 4, mx: 5}}>
+                            <TextField required onChange = {handleChangeImage} value = {imageUrl} id = "text" label = "Image URL" type = "text"></TextField>
+                        </Grid>
+                    ) : (
+
+                        <Grid item xs={12} sx={{mt: 4, mx: 5}}>
+                            <Button>
+                                <input type = "file" id = "picture" label = "image"  onChange = {handleImage}/>
+                            </Button>
+                        </Grid>
+                      
+                    )
+                }
+
              
-                <Grid item xs={12} sx={{mt: 4, mx: 5}}>
-                    <Button >
-                        <input type = "file" id = "picture" label = "image"  onChange = {handleImage}/>
-                    </Button>
-                </Grid>
+                
 
                 <Grid item xs={12} sx={{mt: 4, mx: 5}}>
                     <Button  variant = "contained" onClick = {submitted}>

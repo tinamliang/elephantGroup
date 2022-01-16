@@ -2,18 +2,18 @@ import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import Post from './PostForm';
 
-import { CardHeader, ThemeProvider, createTheme, CircularProgress, Typography, TextField, AppBar, Toolbar, CssBaseline, CardActions, Container, Grid, Button, Card, CardMedia, CardContent } from '@mui/material';
+import { CardHeader, CircularProgress, ThemeProvider, createTheme, Typography, TextField, AppBar, Toolbar, CssBaseline, CardActions, Container, Grid, Button, Card, CardMedia, CardContent } from '@mui/material';
 import './courses';
 import {Autocomplete, createFilterOptions } from '@mui/material';
 import courses from './courses';
-
+import './App.css';
 
 // always send request to proxy no local machine
 axios.defaults.baseURL = 'https://us-central1-elephant-f5f16.cloudfunctions.net/api';
 
 
 function App() {
-
+ 
   const theme = createTheme({
     typography: {
       fontFamily: [
@@ -32,11 +32,12 @@ function App() {
       }
     }
   });
- 
+
+
   const [cards, setCards] = useState([])
   const [listingTextbook, setlistingTextbook] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [course, setCourse] = useState(null)
+  const [course, setCourse] = useState('')
   const [empty, setEmpty] = useState(true)
 
   const filterOptions = createFilterOptions({
@@ -83,27 +84,43 @@ function App() {
   }
 
   return (
-    <>
+    
     <ThemeProvider theme = {theme}>
     <CssBaseline />
-    <AppBar style = {{ background: "#710019"}} position = "relative">
+    <AppBar style = {{ background: "#C51E3A"}} position = "relative">
       <Toolbar>
-        <Typography variant = "h4" sx = {{fontFamily: 'Eczar', fontWeight: 'bold'}}>
+          <Grid
+           // Add it here :)
+          container
+        >
+
+          <Grid item xs={7} md={10}>
+          <Typography variant = "h4" sx = {{fontFamily: 'Eczar', fontWeight: 'bold'}}>
           McGill 
         </Typography>
-        <Button variant='h4' sx = {{marginRight: 6, marginLeft: 145, fontFamily: 'sans-serif', fontSize: 20}} edge = "start" onClick = {handleSell}>
+          </Grid>
+          <Grid item xs={2} md={1}>
+          <Button variant='h4' sx = {{marginRight: 6, fontFamily: 'sans-serif', fontSize: 20}} edge = "start" onClick = {handleSell}>
           Buy
         </Button>
-        <Button variant='h4' sx = {{fontFamily: 'sans-serif', fontSize: 20, marginRight: 20}} edge = "start" onClick = {handleBuy}>
+          </Grid>
+          <Grid item xs={2} md={1}>
+          <Button variant='h4' sx = {{fontFamily: 'sans-serif', fontSize: 20, marginRight: 20}} edge = "start" onClick = {handleBuy}>
           Sell
         </Button>
+          </Grid>
+  
+   
+    
+
+        </Grid>
       </Toolbar>
+
     </AppBar>
-    </ThemeProvider>
 
     {!listingTextbook ? (
       <main>
-        <Typography variant = "h3" align = "center" sx={{mt: 5, mb: 3, fontWeight: 'bold', fontFamily: 'sans-serif', fontSize: 30, color: '#442C2E'}}>Buy a Textbook</Typography>
+        <Typography variant = "h4" align = "center" sx={{mt: 4, mb: 2}}>Buy a Textbook</Typography>
           <div className ="container">
           <Container maxWidth = "sm">
               <div className ={"searchBar"}>
@@ -122,14 +139,13 @@ function App() {
                   
                   variant="outlined"
                   label="Course Code"
-                  style = {{borderWidth: '2px', borderColor: '#442C2E !important'}}
                 />)}
                 />
               </div>
               <div className = "buttons" style={{alignItems: 'center'}}>
                 <Grid container justifyContent={'center'} sx={{mt: 2}}>
                   <Grid item>
-                    <Button variant = "contained" style = {{backgroundColor: '#442C2E', fontFamily: '"Segoe UI"'}} sx = {{mt: 2}} onClick={searchCourse}>
+                    <Button variant = "contained" color = "primary" onClick={searchCourse}>
                       Search
                     </Button>
                   </Grid>
@@ -177,7 +193,7 @@ function App() {
                             />
                             <CardContent >
                               <Typography fontSize={16}>
-                                  <b>Price: {card.price} </b>  
+                                  <b>Price: ${card.price} </b>  
                               </Typography>
                               <hr/>
                               <Typography  fontSize={15}>
@@ -216,9 +232,10 @@ function App() {
       </main>
     
     ) : (<Post />)}
-    
-    </>
+    </ThemeProvider>
+   
   );
+  
 }
 
 export default App;
