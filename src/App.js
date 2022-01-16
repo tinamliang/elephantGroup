@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import Post from './PostForm';
 
-import { CardHeader, CircularProgress, Typography, TextField, AppBar, Toolbar, CssBaseline, CardActions, Container, Grid, Button, Card, CardMedia, CardContent } from '@mui/material';
+import { CardHeader, ThemeProvider, createTheme, CircularProgress, Typography, TextField, AppBar, Toolbar, CssBaseline, CardActions, Container, Grid, Button, Card, CardMedia, CardContent } from '@mui/material';
 import './courses';
 import {Autocomplete, createFilterOptions } from '@mui/material';
 import courses from './courses';
@@ -13,6 +13,25 @@ axios.defaults.baseURL = 'https://us-central1-elephant-f5f16.cloudfunctions.net/
 
 
 function App() {
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        'Rubik',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        'Eczar',
+      ].join(','),
+    },
+    palette: {
+      background: {
+        default: "#E9EAE0",
+      }
+    }
+  });
  
   const [cards, setCards] = useState([])
   const [listingTextbook, setlistingTextbook] = useState(false)
@@ -65,24 +84,26 @@ function App() {
 
   return (
     <>
+    <ThemeProvider theme = {theme}>
     <CssBaseline />
-    <AppBar style = {{ background: "#C51E3A"}} position = "relative">
+    <AppBar style = {{ background: "#710019"}} position = "relative">
       <Toolbar>
-        <Typography variant = "h4" >
+        <Typography variant = "h4" sx = {{fontFamily: 'Eczar', fontWeight: 'bold'}}>
           McGill 
         </Typography>
-        <Button variant='h4' onClick = {handleSell}>
+        <Button variant='h4' sx = {{marginRight: 6, marginLeft: 145, fontFamily: 'sans-serif', fontSize: 20}} edge = "start" onClick = {handleSell}>
           Buy
         </Button>
-        <Button variant='h4' onClick = {handleBuy}>
+        <Button variant='h4' sx = {{fontFamily: 'sans-serif', fontSize: 20, marginRight: 20}} edge = "start" onClick = {handleBuy}>
           Sell
         </Button>
       </Toolbar>
     </AppBar>
+    </ThemeProvider>
 
     {!listingTextbook ? (
       <main>
-        <Typography variant = "h4" align = "center" sx={{mt: 2, mb: 1}}>Buy a Textbook</Typography>
+        <Typography variant = "h3" align = "center" sx={{mt: 5, mb: 3, fontWeight: 'bold', fontFamily: 'sans-serif', fontSize: 30, color: '#442C2E'}}>Buy a Textbook</Typography>
           <div className ="container">
           <Container maxWidth = "sm">
               <div className ={"searchBar"}>
@@ -101,13 +122,14 @@ function App() {
                   
                   variant="outlined"
                   label="Course Code"
+                  style = {{borderWidth: '2px', borderColor: '#442C2E !important'}}
                 />)}
                 />
               </div>
               <div className = "buttons" style={{alignItems: 'center'}}>
                 <Grid container justifyContent={'center'} sx={{mt: 2}}>
                   <Grid item>
-                    <Button variant = "contained" color = "primary" onClick={searchCourse}>
+                    <Button variant = "contained" style = {{backgroundColor: '#442C2E', fontFamily: '"Segoe UI"'}} sx = {{mt: 2}} onClick={searchCourse}>
                       Search
                     </Button>
                   </Grid>
