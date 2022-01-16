@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import { TextField, MenuItem, Button, Select, FormControl, InputLabel, Typography } from '@mui/material';
+import { TextField, Grid, MenuItem, Button, Select, FormControl, InputLabel, Typography } from '@mui/material';
 import courses from './courses';
+import {Autocomplete, createFilterOptions } from '@mui/material';
 
 function Post() {
 
@@ -11,6 +12,11 @@ function Post() {
     const[price, setPrice] = useState(null);
     const[contact, setContact] = useState(null);
     const[imageUrl, setImageUrl] = useState(null);
+
+    const filterOptions = createFilterOptions({
+      matchFrom: 'start',
+      stringify: option => option,
+    });
 
     let submitted = () => {
         setSubmitForm(true);
@@ -46,6 +52,7 @@ function Post() {
 
             <Typography variant = "h4" align = "center" sx = {{mt: 6, mb: -5}}>Post your own textbook using this form! </Typography>
 
+            <Grid>
             <TextField required onChange = {handleChange} sx={{mt: 8, mb: 1, ml: 80}} value = {title} id = "title" label = "Title" type = "text"></TextField>
             
             <TextField required onChange = {handleChangeAuthor} sx={{mt: 18, ml: -28}} value = {author} id = "author" label = "Author" type = "text"></TextField>
@@ -54,22 +61,30 @@ function Post() {
 
             <TextField required onChange = {handleChangeContact} sx={{mt: 38, ml: -28}} value = {contact} id = "contact" label = "Contact" type = "text"></TextField>
 
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <FormControl sx={{ m: 1, minWidth: 400 }}>
 
-              <InputLabel sx={{mt: 48, ml: -29}}>Course Code</InputLabel>
-              <Select sx={{mt: 48, ml: -29}} id ="course" label="Course Code">
-                {courses.map(course => (
-                  <MenuItem value = {course}>{course}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+              <Autocomplete
+                  style={{ maxWidth: 450 }}
+                  freeSolo
+                  filterOptions={filterOptions}
+                  options={courses}
+                  renderInput={(params) => (
+                <TextField {...params}
+                  sx={{mt: 48, ml: -29}}
+                  variant="outlined"
+                  label="Course Code"
+                />)}
+                />
+ 
             
-            <Button sx={{mt: 50, ml: -46}} onClick = {handleImage}>
+            <Button sx={{mt: 5, ml: -76}} onClick = {handleImage}>
             <input type = "file" id = "picture" label = "image"/>
             </Button>
 
-            <Button sx={{mt: 68, ml: -33}} variant = "contained" onClick = {submitted}>Submit</Button>
-
+            <Button sx={{mt: 4, ml: -29}} variant = "contained" onClick = {submitted}>Submit</Button>
+            
+            </FormControl>
+            </Grid>
             {submitForm ? (<h3>Form Submitted!</h3>) : (<h3>Sorry! There was a mistake</h3>)};
 
         </div>
