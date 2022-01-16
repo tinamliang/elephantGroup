@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
-import Post from './postForm';
+import Post from './PostForm';
 
 import { CardHeader, CircularProgress, Typography, TextField, AppBar, Toolbar, CssBaseline, CardActions, Container, Grid, Button, Card, CardMedia, CardContent } from '@mui/material';
 import './courses';
@@ -84,8 +84,8 @@ function App() {
       <main>
         <Typography variant = "h4" align = "center" sx={{mt: 2, mb: 1}}>Buy a Textbook</Typography>
           <div className ="container">
-            <Container maxWidth = "sm">
-              <div className = {"searchBar"}>
+          <Container maxWidth = "sm">
+              <div className ={"searchBar"}>
                 <Autocomplete
                   style={{ maxWidth: 500 }}
                   freeSolo
