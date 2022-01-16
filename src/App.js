@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-
+import Post from './postForm';
 import { CardHeader, CircularProgress, Typography, TextField, AppBar, Toolbar, CssBaseline, CardActions, Container, Grid, Button, Card, CardMedia, CardContent } from '@mui/material';
 import './courses';
 import {Autocomplete, createFilterOptions } from '@mui/material';
@@ -142,7 +142,7 @@ function App() {
 
       }</main>
     
-    ) : (<h1>No!</h1>)}
+    ) : (<Post />)}
     
     </>
   );

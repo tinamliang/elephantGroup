@@ -1,6 +1,5 @@
 const courses = [
 
-"AAAA 100 ",
 "ACCT 351 Intermediate Financial Accounting 1 (3 credits)",
 "ACCT 352 Intermediate Financial Accounting 2 (3 credits)",
 "ACCT 354 Financial Statement Analysis (3 credits)",
