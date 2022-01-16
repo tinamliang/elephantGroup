@@ -10,6 +10,7 @@ function Post() {
     const[author, setAuthor] = useState(null);
     const[price, setPrice] = useState(null);
     const[contact, setContact] = useState(null);
+    const[imageUrl, setImageUrl] = useState(null);
 
     let submitted = () => {
         setSubmitForm(true);
@@ -35,6 +36,10 @@ function Post() {
       setContact(event.target.value);
     };
 
+    let handleImage = event => {
+      setImageUrl(event.target.value);
+    }
+
     return (
       
         <div>
@@ -59,7 +64,7 @@ function Post() {
               </Select>
             </FormControl>
             
-            <Button sx={{mt: 50, ml: -46}}>
+            <Button sx={{mt: 50, ml: -46}} onClick = {handleImage}>
             <input type = "file" id = "picture" label = "image"/>
             </Button>
 
