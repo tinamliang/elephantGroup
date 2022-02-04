@@ -7,8 +7,9 @@ Built for hack McWiCS 2022 - a hub for students who want to purchase textbooks a
 
 ## Technologies Used
 
-**React, Material UI** for front-end <br />
-**Node.js and Firebase** for back-end
+- React, Material UI
+- NodeJS
+- Firebase
 
 <p align = "center">
   <img src="gallery.jpg" alt="animated" width = "625", height = "289"/>
