@@ -1,7 +1,7 @@
 # McGill Textbook Exchange
 Build for hack McWiCS 2022
 
-![alt text](https://github.com/tinamliang/elephantGroup/blob/elephant.png?raw=true)
+<img src="elephant.png" alt="animated" />
 
 https://elephant-f5f16.web.app/
 
