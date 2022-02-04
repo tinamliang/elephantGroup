@@ -4,9 +4,10 @@ Built for hack McWiCS 2022 - a hub for students who want to purchase textbooks a
 <p align = "center">
   <img src="elephant.png" alt="animated"  width = "625" height = "311"/>
 </p>
+
 ## Technologies Used
 
-**React, Material UI** for front-end
+**React, Material UI** for front-end <br />
 **Node.js and Firebase** for back-end
 
 <p align = "center">
