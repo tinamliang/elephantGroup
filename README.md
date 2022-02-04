@@ -10,7 +10,7 @@ Build for hack McWiCS 2022 - a hub for students who want to purchase textbooks a
 **Node.js and Firebase** for back-end
 
 <p align = "center">
-  <img src="gallery.jpg" alt="animated" width = "269", height = "125"/>
+  <img src="gallery.jpg" alt="animated"/>
 </p>
 
 ## Access project
