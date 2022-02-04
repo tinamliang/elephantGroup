@@ -2,7 +2,7 @@
 
 Build for hack McWiCS 2022 - a hub for students who want to purchase textbooks at a discount according to the course code they're enrolled in at McGill.
 
-<img src="elephant.png" alt="animated"  width = "200" height = "400"/>
+<img src="elephant.png" alt="animated"  width = "375" height = "186"/>
 
 ## Technologies Used
 
